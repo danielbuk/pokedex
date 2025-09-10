@@ -3,207 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎮 Pokedex GSAP - Nível Épico!</title>
-    
-    <!-- GSAP CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
-    
-    <!-- CSS Avançado -->
+    <title>🎮 Pokedex Nível Lendário</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_advanced.css') }}">
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="gsap-loader" id="loader">
-        <div class="loader-content">
-            <div class="loader-spinner"></div>
-            <div class="loader-text">Carregando Pokedex...</div>
-        </div>
-    </div>
-
-    <!-- Hero Section -->
     <section class="hero-section" id="hero">
-        <div class="particle" style="top: 20%; left: 10%;"></div>
-        <div class="particle" style="top: 60%; left: 80%;"></div>
-        <div class="particle" style="top: 40%; left: 30%;"></div>
-        <div class="particle" style="top: 80%; left: 60%;"></div>
-        <div class="particle" style="top: 30%; left: 70%;"></div>
-        
         <div class="hero-content">
-            <h1 class="hero-title" id="heroTitle">POKEDEX GSAP</h1>
-            <p class="hero-subtitle" id="heroSubtitle">Animações de Nível Profissional</p>
+            <h1 class="hero-title" id="heroTitle">POKEDEX LENDÁRIA</h1>
+            <p class="hero-subtitle" id="heroSubtitle">Explore o mundo Pokémon com animações de nível profissional.</p>
             <button class="cta-button" id="ctaButton">Explorar Pokémon</button>
         </div>
     </section>
 
-    <!-- Content Section -->
     <section class="content-section" id="content">
         <div class="container">
-            <!-- Stats Section -->
-            <div class="stats-gsap" id="stats">
-                <div class="stat-card-gsap">
-                    <div class="stat-number" data-target="1302">0</div>
-                    <p>Pokémon Disponíveis</p>
-                </div>
-                <div class="stat-card-gsap">
-                    <div class="stat-number" data-target="18">0</div>
-                    <p>Tipos Diferentes</p>
-                </div>
-                <div class="stat-card-gsap">
-                    <div class="stat-number" data-target="100">0</div>
-                    <p>% Dados Oficiais</p>
-                </div>
-                <div class="stat-card-gsap">
-                    <div class="stat-number" data-target="999">0</div>
-                    <p>Animações Épicas</p>
-                </div>
-            </div>
-
-            <!-- Pokémon Grid -->
-            <div class="pokemon-grid-gsap" id="pokemonGrid">
-                <div class="pokemon-card-gsap">
-                    <h3>🔍 Testar API</h3>
-                    <p>Teste a API da Pokedex com Pokémon populares:</p>
-                    <a href="/api/pokemon/25" class="btn-gsap">Pikachu</a>
-                    <a href="/api/pokemon/6" class="btn-gsap">Charizard</a>
-                    <a href="/api/pokemon/150" class="btn-gsap">Mewtwo</a>
-                </div>
-                
-                <div class="pokemon-card-gsap">
-                    <h3>📋 Lista de Pokémon</h3>
-                    <p>Veja a lista completa de Pokémon disponíveis:</p>
-                    <a href="/api/lista" class="btn-gsap">Ver Lista</a>
-                    <a href="/api/lista?limit=10" class="btn-gsap">Primeiros 10</a>
-                </div>
-                
-                <div class="pokemon-card-gsap">
-                    <h3>🎯 Buscar Pokémon</h3>
-                    <p>Busque qualquer Pokémon por nome ou ID:</p>
-                    <form action="/buscar" method="GET" style="margin-top: 15px;">
-                        <input type="text" name="q" placeholder="Digite o nome ou ID..." class="search-box">
-                        <button type="submit" class="btn-gsap">Buscar</button>
-                    </form>
-                </div>
-                
-                <div class="pokemon-card-gsap">
-                    <h3>📱 Links Diretos</h3>
-                    <p>Acesse Pokémon específicos diretamente:</p>
-                    <a href="/pokemon/25" class="btn-gsap">Pikachu</a>
-                    <a href="/pokemon/6" class="btn-gsap">Charizard</a>
-                    <a href="/pokemon/1" class="btn-gsap">Bulbasaur</a>
-                    <a href="/pokemon/150" class="btn-gsap">Mewtwo</a>
+            <h2 class="section-title">Encontre seu Pokémon</h2>
+            <p class="section-subtitle">Abaixo está a lista dos 151 Pokémon originais. Clique para ver os detalhes.</p>
+            
+            <div id="pokemon-grid">
+                <div class="loader-container">
+                    <div class="loader-spinner"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <div class="footer">
-        <p>🎮 Pokedex GSAP - Dados da <a href="https://pokeapi.co" target="_blank">PokeAPI</a></p>
-        <p>Pokémon é uma marca registrada da Nintendo</p>
-    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
 
-    <!-- GSAP JavaScript OTIMIZADO -->
     <script>
-        // Registrar os plugins do GSAP
-        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-        // --- ANIMAÇÃO DE LOADING ---
-        const loaderTimeline = gsap.timeline();
-        loaderTimeline
-            .to(".loader-spinner", { 
-                rotation: 360, 
-                duration: 1, 
-                repeat: -1, 
-                ease: "none" 
-            })
-            .to("#loader", { 
-                opacity: 0, 
-                duration: 0.5, 
-                delay: 1.5, // Simula um tempo de carregamento
-                onComplete: () => document.getElementById("loader").style.display = 'none'
+            // --- ANIMAÇÃO DA SEÇÃO HERO ---
+            const heroTimeline = gsap.timeline();
+            heroTimeline
+                .from("#heroTitle", { opacity: 0, y: -50, duration: 1, ease: "power2.out" })
+                .from("#heroSubtitle", { opacity: 0, y: 50, duration: 1, ease: "power2.out" }, "-=0.7")
+                .from("#ctaButton", { opacity: 0, scale: 0.8, duration: 0.8, ease: "back.out(1.7)" }, "-=0.5");
+
+            // --- BOTÃO "EXPLORAR POKÉMON" ---
+            document.getElementById("ctaButton").addEventListener("click", () => {
+                gsap.to(window, {
+                    duration: 1.5,
+                    scrollTo: "#content",
+                    ease: "power2.inOut"
+                });
             });
 
-        // --- ANIMAÇÃO DA SEÇÃO HERO ---
-        // Inicia somente após o loader terminar
-        const heroTimeline = gsap.timeline({ paused: true });
-        heroTimeline
-            .from("#heroTitle", { opacity: 0, y: -50, duration: 1, ease: "power2.out" })
-            .from("#heroSubtitle", { opacity: 0, y: 50, duration: 1, ease: "power2.out" }, "-=0.7")
-            .from("#ctaButton", { opacity: 0, scale: 0.8, duration: 0.8, ease: "back.out(1.7)" }, "-=0.5");
+            // --- NÍVEL ABSURDO: CARREGAMENTO DINÂMICO ---
+            const pokemonGrid = document.getElementById('pokemon-grid');
 
-        // Inicia a timeline do Hero quando o loader acaba
-        loaderTimeline.then(() => heroTimeline.play());
+            const fetchAndDisplayPokemon = async () => {
+                try {
+                    const response = await fetch('/api/lista?limit=151');
+                    if (!response.ok) throw new Error('Erro na rede!');
+                    
+                    const data = await response.json();
+                    const pokemonPromises = data.results.map(p => fetch(`/api/pokemon/${p.id}`).then(res => res.json()));
+                    const allPokemonData = await Promise.all(pokemonPromises);
+                    
+                    pokemonGrid.innerHTML = ''; // Limpa o loader
 
-        // --- ANIMAÇÕES DE SCROLLTRIGGER ---
-        // Cards aparecem com a rolagem
-        gsap.from(".pokemon-card-gsap", {
-            scrollTrigger: {
-                trigger: "#pokemonGrid",
-                start: "top 85%",
-                toggleActions: "play none none reverse"
-            },
-            opacity: 0,
-            y: 100,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: "power2.out",
-        });
+                    allPokemonData.forEach(pokemon => {
+                        const typesHtml = pokemon.tipos.map(type => `<span class="type-badge type-${type}">${type}</span>`).join('');
+                        
+                        const card = document.createElement('div');
+                        card.className = 'pokemon-card';
+                        card.innerHTML = `
+                            <div class="pokemon-card-id">#${String(pokemon.id).padStart(3, '0')}</div>
+                            <img src="${pokemon.sprites.front_default}" alt="${pokemon.nome}" class="pokemon-card-sprite">
+                            <h3 class="pokemon-card-name">${pokemon.nome}</h3>
+                            <div class="pokemon-card-types">${typesHtml}</div>
+                        `;
+                        
+                        // Adiciona evento de clique para ir para a página de detalhes
+                        card.addEventListener('click', () => {
+                            window.location.href = `/pokemon/${pokemon.id}`;
+                        });
 
-        // Stats aparecem com a rolagem
-        gsap.from(".stat-card-gsap", {
-            scrollTrigger: {
-                trigger: "#stats",
-                start: "top 85%",
-                toggleActions: "play none none reverse"
-            },
-            opacity: 0,
-            scale: 0.8,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: "back.out(1.7)",
-        });
+                        pokemonGrid.appendChild(card);
+                    });
 
-        // Animação do contador dos stats
-        gsap.utils.toArray(".stat-number").forEach(stat => {
-            gsap.from(stat, {
-                textContent: 0,
-                duration: 2,
-                ease: "power2.out",
-                snap: { textContent: 1 },
-                scrollTrigger: {
-                    trigger: stat,
-                    start: "top 90%",
-                    toggleActions: "play none none reverse",
+                    // Anima os cards recém-criados
+                    gsap.from(".pokemon-card", {
+                        opacity: 0,
+                        y: 50,
+                        duration: 0.5,
+                        stagger: 0.05,
+                        ease: "power2.out"
+                    });
+
+                } catch (error) {
+                    pokemonGrid.innerHTML = '<p style="color: var(--pokemon-red); text-align: center; grid-column: 1 / -1;">Falha ao carregar Pokémon. Tente recarregar a página.</p>';
+                    console.error("Erro ao buscar Pokémon:", error);
                 }
-            });
-        });
+            };
 
-        // --- INTERAÇÕES DO USUÁRIO ---
-        // Efeito de hover nos cards
-        document.querySelectorAll(".pokemon-card-gsap, .stat-card-gsap").forEach(card => {
-            card.addEventListener("mouseenter", () => {
-                gsap.to(card, { y: -10, duration: 0.3, ease: "power2.out" });
-            });
-            card.addEventListener("mouseleave", () => {
-                gsap.to(card, { y: 0, duration: 0.3, ease: "power2.out" });
-            });
+            fetchAndDisplayPokemon();
         });
-
-        // *** BOTÃO "EXPLORAR POKÉMON" CORRIGIDO ***
-        document.getElementById("ctaButton").addEventListener("click", () => {
-            gsap.to(window, {
-                duration: 1.5, // Duração da rolagem
-                scrollTo: {
-                    y: "#content", // Alvo do scroll
-                    offsetY: 50 // Um pequeno espaço do topo
-                },
-                ease: "power2.inOut" // Efeito de aceleração
-            });
-        });
-
-        console.log("🚀 Pokedex GSAP carregada com sucesso!");
     </script>
 </body>
 </html>
