@@ -314,7 +314,188 @@
         <p>Pokémon é uma marca registrada da Nintendo</p>
     </div>
 
-    <!-- GSAP JavaScript Avançado -->
-    <script src="{{ url_for('static', filename='js/gsap_advanced.js') }}"></script>
+    <!-- GSAP JavaScript - VERSÃO SIMPLES E FUNCIONAL -->
+    <script>
+        // Registrar plugins
+        gsap.registerPlugin(ScrollTrigger, TextPlugin, MotionPathPlugin);
+
+        // Configurações iniciais
+        gsap.set(".pokemon-card-gsap", { opacity: 0, y: 100 });
+        gsap.set(".stat-card-gsap", { opacity: 0, scale: 0.8 });
+        gsap.set("#heroTitle", { opacity: 0, y: -50 });
+        gsap.set("#heroSubtitle", { opacity: 0, y: 50 });
+        gsap.set("#ctaButton", { opacity: 0, scale: 0.8 });
+        gsap.set(".particle", { opacity: 0, scale: 0 });
+
+        // Timeline principal
+        const mainTimeline = gsap.timeline();
+
+        // Animação de loading
+        mainTimeline
+            .to(".loader-spinner", { rotation: 360, duration: 1, repeat: -1, ease: "none" })
+            .to("#loader", { opacity: 0, duration: 0.5, delay: 2 })
+            .set("#loader", { display: "none" })
+            
+            // Hero animations
+            .to("#heroTitle", { opacity: 1, y: 0, duration: 1, ease: "power2.out" })
+            .to("#heroSubtitle", { opacity: 1, y: 0, duration: 1, ease: "power2.out" }, "-=0.5")
+            .to("#ctaButton", { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.7)" }, "-=0.3")
+            
+            // Particles animation
+            .to(".particle", { 
+                opacity: 1, 
+                scale: 1, 
+                duration: 1, 
+                stagger: 0.2,
+                ease: "power2.out"
+            }, "-=0.5");
+
+        // ScrollTrigger para stats
+        gsap.to(".stat-number", {
+            textContent: function() {
+                return this.getAttribute("data-target");
+            },
+            duration: 2,
+            ease: "power2.out",
+            snap: { textContent: 1 },
+            scrollTrigger: {
+                trigger: "#stats",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            }
+        });
+
+        // Animações dos cards com ScrollTrigger
+        gsap.to(".pokemon-card-gsap", {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: "#pokemonGrid",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            }
+        });
+
+        // Animações dos stats
+        gsap.to(".stat-card-gsap", {
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "back.out(1.7)",
+            scrollTrigger: {
+                trigger: "#stats",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse"
+            }
+        });
+
+        // Hover effects para cards
+        document.querySelectorAll(".pokemon-card-gsap").forEach(card => {
+            card.addEventListener("mouseenter", () => {
+                gsap.to(card, { 
+                    scale: 1.05, 
+                    rotationY: 5, 
+                    rotationX: 5,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+            
+            card.addEventListener("mouseleave", () => {
+                gsap.to(card, { 
+                    scale: 1, 
+                    rotationY: 0, 
+                    rotationX: 0,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+        });
+
+        // Hover effects para botões
+        document.querySelectorAll(".btn-gsap").forEach(btn => {
+            btn.addEventListener("mouseenter", () => {
+                gsap.to(btn, { 
+                    scale: 1.1, 
+                    duration: 0.2,
+                    ease: "power2.out"
+                });
+            });
+            
+            btn.addEventListener("mouseleave", () => {
+                gsap.to(btn, { 
+                    scale: 1, 
+                    duration: 0.2,
+                    ease: "power2.out"
+                });
+            });
+        });
+
+        // CTA Button click animation - VERSÃO FUNCIONAL
+        document.getElementById("ctaButton").addEventListener("click", (e) => {
+            e.preventDefault();
+            console.log('🎮 Botão "Explorar Pokémon" clicado!');
+            
+            // Efeito visual no botão
+            gsap.to("#ctaButton", { 
+                scale: 0.95, 
+                duration: 0.1,
+                yoyo: true,
+                repeat: 1,
+                ease: "power2.inOut"
+            });
+            
+            // Scroll funcional
+            setTimeout(() => {
+                const contentSection = document.querySelector('.content-section');
+                if (contentSection) {
+                    console.log('✅ Fazendo scroll para content-section');
+                    contentSection.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                } else {
+                    console.log('⚠️ Content-section não encontrado, scroll manual');
+                    window.scrollTo({
+                        top: window.innerHeight,
+                        behavior: 'smooth'
+                    });
+                }
+            }, 200);
+        });
+
+        // Parallax effect para partículas
+        gsap.to(".particle", {
+            y: -100,
+            duration: 3,
+            repeat: -1,
+            yoyo: true,
+            ease: "power1.inOut",
+            stagger: 0.5
+        });
+
+        // Text animation para hero title
+        gsap.to("#heroTitle", {
+            textShadow: "0 0 30px rgba(255, 203, 5, 0.8)",
+            duration: 2,
+            repeat: -1,
+            yoyo: true,
+            ease: "power2.inOut"
+        });
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            ScrollTrigger.refresh();
+        });
+
+        console.log("🚀 GSAP Pokedex carregada com sucesso!");
+    </script>
 </body>
 </html>
