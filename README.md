@@ -1,55 +1,115 @@
-# 🎮 Pokémon API - Documentação Simples
+# 🎮 Pokedex Flask - Sistema Completo
 
-Uma documentação limpa e simples para usar a PokeAPI e criar jogos Pokémon.
+Uma Pokedex moderna e funcional construída com Flask, integrada com a PokeAPI oficial.
 
-## 📚 O que você encontra aqui
+## ✨ Funcionalidades
 
-- **API PokeAPI**: Classe pronta para buscar dados de Pokémon
-- **Download de Sprites**: Baixe sprites oficiais automaticamente
-- **Documentação Completa**: Como usar tudo passo a passo
-- **Exemplos Práticos**: Código pronto para usar
+- 🔍 **Busca de Pokémon** por nome ou ID
+- 📱 **Interface moderna** com design Pokémon autêntico
+- 🎨 **Cores oficiais** do Pokémon
+- 📊 **API completa** para integração
+- 🖼️ **Sprites oficiais** da PokeAPI
+- 📋 **Lista completa** de todos os 1302 Pokémon
+- 🚀 **100% funcional** e testado
 
-## 🚀 Começar Agora
+## 🚀 Como Usar
 
-1. **Instale as dependências**:
+### Instalação
 ```bash
-pip install requests pillow
+# Clone o repositório
+git clone https://github.com/danielbuk/pokedex.git
+cd pokedex
+
+# Instale as dependências
+pip install -r requirements.txt
 ```
 
-2. **Teste a API**:
+### Executar
 ```bash
-python pokeapi_test.py
+# Inicie a Pokedex
+python pokedex_final.py
 ```
 
-3. **Leia a documentação**:
+### Acessar
+- **URL**: http://localhost:5000
+- **API**: http://localhost:5000/api/pokemon/[nome-ou-id]
+
+## 📁 Estrutura do Projeto
+
+```
+pokedex/
+├── pokedex_final.py          # Arquivo principal (USE ESTE!)
+├── templates/
+│   ├── simples.html          # Página inicial moderna
+│   ├── pokemon_detail.html   # Detalhes do Pokémon
+│   └── base.html            # Template base
+├── static/
+│   ├── css/style.css        # Estilos Pokémon
+│   └── js/main.js           # JavaScript
+├── requirements.txt         # Dependências
+└── README.md               # Este arquivo
+```
+
+## 🔧 API Endpoints
+
+- `GET /` - Página inicial
+- `GET /api/pokemon/[nome-ou-id]` - Dados do Pokémon
+- `GET /api/lista` - Lista de todos os Pokémon
+- `GET /buscar?q=[nome]` - Busca por nome
+- `GET /pokemon/[nome-ou-id]` - Página de detalhes
+
+## 🎯 Exemplos de Uso
+
+### Buscar Pokémon
 ```bash
-# Abra o arquivo API_POKEMON_DOCS.md
+# Via API
+curl http://localhost:5000/api/pokemon/pikachu
+curl http://localhost:5000/api/pokemon/25
+
+# Via navegador
+http://localhost:5000/pokemon/pikachu
+http://localhost:5000/buscar?q=charizard
 ```
 
-## 📁 Arquivos
+### Lista de Pokémon
+```bash
+# Todos os Pokémon
+curl http://localhost:5000/api/lista
 
-- `pokeapi_test.py` - Classe principal da API
-- `API_POKEMON_DOCS.md` - Documentação completa
-- `requirements.txt` - Dependências necessárias
-
-## 🎯 Para que usar
-
-- ✅ Criar jogos Pokémon
-- ✅ Buscar dados oficiais
-- ✅ Baixar sprites automaticamente
-- ✅ Acessar estatísticas reais
-- ✅ Usar em projetos educacionais
-
-## 🔧 Exemplo Rápido
-
-```python
-from pokeapi_test import PokeAPI
-
-api = PokeAPI()
-pikachu = api.buscar_pokemon("pikachu")
-api.baixar_sprite(pikachu, 'front_default')
+# Primeiros 10
+curl http://localhost:5000/api/lista?limit=10
 ```
+
+## 🛠️ Tecnologias
+
+- **Flask** - Framework web
+- **PokeAPI** - API oficial do Pokémon
+- **HTML/CSS/JavaScript** - Frontend
+- **Python** - Backend
+
+## 📝 Notas Importantes
+
+- ✅ **Use sempre**: `python pokedex_final.py`
+- ✅ **Funciona 100%** sem erros
+- ✅ **Integração completa** com PokeAPI
+- ✅ **Design responsivo** e moderno
+
+## 🎮 Screenshots
+
+A Pokedex inclui:
+- Interface moderna com cores oficiais do Pokémon
+- Busca funcional por nome ou ID
+- Exibição de sprites oficiais
+- Dados completos de cada Pokémon
+- API REST para integração
+
+## 📞 Suporte
+
+Se encontrar algum problema:
+1. Verifique se está usando `pokedex_final.py`
+2. Confirme que a porta 5000 está livre
+3. Execute `python test_pokedex.py` para testar
 
 ---
 
-**🎮 Pronto para criar seu jogo Pokémon!**
+**Pokémon é uma marca registrada da Nintendo. Este projeto é apenas para fins educacionais.**
