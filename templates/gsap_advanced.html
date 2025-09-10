@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Pokedex GSAP - Nível Épico!</title>
+    
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
+    
+    <!-- CSS Avançado -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_advanced.css') }}">
+    
+    <style>
+        /* Estilos específicos para GSAP */
+        .gsap-container {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 203, 5, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.2) 0%, transparent 50%),
+                linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            position: relative;
+        }
+        
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFCB05 0%, #3B82F6 50%, #EF4444 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(255, 203, 5, 0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #CBD5E1;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #FFCB05 0%, #3B82F6 100%);
+            border: none;
+            color: #0F172A;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 203, 5, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255, 203, 5, 0.5);
+        }
+        
+        /* Partículas de fundo */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #FFCB05;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        /* Cards com animações GSAP */
+        .pokemon-card-gsap {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 203, 5, 0.2);
+            border-radius: 25px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .pokemon-card-gsap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #FFCB05 0%, #3B82F6 50%, #EF4444 100%);
+            border-radius: 25px 25px 0 0;
+        }
+        
+        /* Seção de conteúdo */
+        .content-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+        }
+        
+        /* Grid de Pokémon */
+        .pokemon-grid-gsap {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin: 50px 0;
+        }
+        
+        /* Stats com animação */
+        .stats-gsap {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .stat-card-gsap {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            color: #F8FAFC;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFCB05 0%, #3B82F6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        /* Botões com animação */
+        .btn-gsap {
+            background: rgba(255, 203, 5, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 203, 5, 0.3);
+            color: #FFCB05;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Loading spinner GSAP */
+        .gsap-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0F172A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        
+        .loader-content {
+            text-align: center;
+        }
+        
+        .loader-spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(255, 203, 5, 0.3);
+            border-top: 4px solid #FFCB05;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+        }
+        
+        .loader-text {
+            color: #FFCB05;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .pokemon-grid-gsap {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-gsap {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="gsap-loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Carregando Pokedex...</div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="particle" style="top: 20%; left: 10%;"></div>
+        <div class="particle" style="top: 60%; left: 80%;"></div>
+        <div class="particle" style="top: 40%; left: 30%;"></div>
+        <div class="particle" style="top: 80%; left: 60%;"></div>
+        <div class="particle" style="top: 30%; left: 70%;"></div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title" id="heroTitle">POKEDEX GSAP</h1>
+            <p class="hero-subtitle" id="heroSubtitle">Animações de Nível Profissional</p>
+            <button class="cta-button" id="ctaButton">Explorar Pokémon</button>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content-section" id="content">
+        <div class="container">
+            <!-- Stats Section -->
+            <div class="stats-gsap" id="stats">
+                <div class="stat-card-gsap">
+                    <div class="stat-number" data-target="1302">0</div>
+                    <p>Pokémon Disponíveis</p>
+                </div>
+                <div class="stat-card-gsap">
+                    <div class="stat-number" data-target="18">0</div>
+                    <p>Tipos Diferentes</p>
+                </div>
+                <div class="stat-card-gsap">
+                    <div class="stat-number" data-target="100">0</div>
+                    <p>% Dados Oficiais</p>
+                </div>
+                <div class="stat-card-gsap">
+                    <div class="stat-number" data-target="999">0</div>
+                    <p>Animações Épicas</p>
+                </div>
+            </div>
+
+            <!-- Pokémon Grid -->
+            <div class="pokemon-grid-gsap" id="pokemonGrid">
+                <div class="pokemon-card-gsap">
+                    <h3>🔍 Testar API</h3>
+                    <p>Teste a API da Pokedex com Pokémon populares:</p>
+                    <a href="/api/pokemon/25" class="btn-gsap">Pikachu</a>
+                    <a href="/api/pokemon/6" class="btn-gsap">Charizard</a>
+                    <a href="/api/pokemon/150" class="btn-gsap">Mewtwo</a>
+                </div>
+                
+                <div class="pokemon-card-gsap">
+                    <h3>📋 Lista de Pokémon</h3>
+                    <p>Veja a lista completa de Pokémon disponíveis:</p>
+                    <a href="/api/lista" class="btn-gsap">Ver Lista</a>
+                    <a href="/api/lista?limit=10" class="btn-gsap">Primeiros 10</a>
+                </div>
+                
+                <div class="pokemon-card-gsap">
+                    <h3>🎯 Buscar Pokémon</h3>
+                    <p>Busque qualquer Pokémon por nome ou ID:</p>
+                    <form action="/buscar" method="GET" style="margin-top: 15px;">
+                        <input type="text" name="q" placeholder="Digite o nome ou ID..." class="search-box">
+                        <button type="submit" class="btn-gsap">Buscar</button>
+                    </form>
+                </div>
+                
+                <div class="pokemon-card-gsap">
+                    <h3>📱 Links Diretos</h3>
+                    <p>Acesse Pokémon específicos diretamente:</p>
+                    <a href="/pokemon/25" class="btn-gsap">Pikachu</a>
+                    <a href="/pokemon/6" class="btn-gsap">Charizard</a>
+                    <a href="/pokemon/1" class="btn-gsap">Bulbasaur</a>
+                    <a href="/pokemon/150" class="btn-gsap">Mewtwo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>🎮 Pokedex GSAP - Dados da <a href="https://pokeapi.co" target="_blank">PokeAPI</a></p>
+        <p>Pokémon é uma marca registrada da Nintendo</p>
+    </div>
+
+    <!-- GSAP JavaScript Avançado -->
+    <script src="{{ url_for('static', filename='js/gsap_advanced.js') }}"></script>
+</body>
+</html>

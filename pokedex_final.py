@@ -95,6 +95,11 @@ poke_api = PokeAPI()
 @app.route('/')
 def index():
     """Página inicial"""
+    return render_template('gsap_advanced.html')
+
+@app.route('/classic')
+def classic():
+    """Página clássica"""
     return render_template('simples.html')
 
 @app.route('/home')
