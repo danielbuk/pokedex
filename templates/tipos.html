@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+
+{% block title %}Tipos de Pokémon - Pokedex{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="hero-title">TIPOS DE POKÉMON</h1>
+                <p class="hero-subtitle">Descubra todos os tipos elementais e suas características!</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Grid de Tipos -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="display-4 fw-bold text-warning">Todos os Tipos</h2>
+                <p class="lead">Cada tipo tem suas vantagens e desvantagens em batalha!</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for tipo in tipos %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="pokemon-card text-center">
+                    <div class="pokemon-card-header">
+                        <i class="fas fa-fire fa-3x mb-3"></i>
+                        <h3>{{ tipo.nome }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-3">Tipo {{ tipo.nome }}</p>
+                        <button class="btn btn-pokemon btn-sm" onclick="buscarPokemonPorTipo('{{ tipo.nome.lower() }}')">
+                            <i class="fas fa-search"></i> Ver Pokémon
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Tabela de Efetividade -->
+<section class="py-5 bg-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="info-section">
+                    <h3><i class="fas fa-table"></i> Tabela de Efetividade</h3>
+                    <p class="mb-4">Entenda como os tipos se relacionam em batalha!</p>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-dark table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Super Efetivo Contra</th>
+                                    <th>Pouco Efetivo Contra</th>
+                                    <th>Não Afeta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="type-badge type-fire">Fogo</span></td>
+                                    <td>Planta, Inseto, Aço, Gelo</td>
+                                    <td>Fogo, Água, Pedra, Dragão</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-water">Água</span></td>
+                                    <td>Fogo, Pedra, Terra</td>
+                                    <td>Água, Planta, Dragão</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-grass">Planta</span></td>
+                                    <td>Água, Pedra, Terra</td>
+                                    <td>Fogo, Planta, Voador, Inseto, Venenoso, Aço, Dragão</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-electric">Elétrico</span></td>
+                                    <td>Água, Voador</td>
+                                    <td>Planta, Elétrico, Dragão</td>
+                                    <td>Terra</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-psychic">Psíquico</span></td>
+                                    <td>Lutador, Venenoso</td>
+                                    <td>Psíquico, Aço</td>
+                                    <td>Sombrio</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-ice">Gelo</span></td>
+                                    <td>Planta, Terra, Voador, Dragão</td>
+                                    <td>Fogo, Água, Aço, Gelo</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-dragon">Dragão</span></td>
+                                    <td>Dragão</td>
+                                    <td>Aço</td>
+                                    <td>Fada</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-dark">Sombrio</span></td>
+                                    <td>Psíquico, Fantasma</td>
+                                    <td>Lutador, Sombrio, Fada</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-fairy">Fada</span></td>
+                                    <td>Lutador, Dragão, Sombrio</td>
+                                    <td>Fogo, Venenoso, Aço</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-fighting">Lutador</span></td>
+                                    <td>Normal, Gelo, Pedra, Sombrio, Aço</td>
+                                    <td>Voador, Venenoso, Psíquico, Inseto, Fada</td>
+                                    <td>Fantasma</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-poison">Venenoso</span></td>
+                                    <td>Planta, Fada</td>
+                                    <td>Venenoso, Pedra, Fantasma, Terra</td>
+                                    <td>Aço</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-ground">Terra</span></td>
+                                    <td>Fogo, Elétrico, Venenoso, Pedra, Aço</td>
+                                    <td>Planta, Inseto</td>
+                                    <td>Voador</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-flying">Voador</span></td>
+                                    <td>Lutador, Inseto, Planta</td>
+                                    <td>Elétrico, Pedra, Aço</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-bug">Inseto</span></td>
+                                    <td>Planta, Psíquico, Sombrio</td>
+                                    <td>Fogo, Lutador, Venenoso, Voador, Fantasma, Aço, Fada</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-rock">Pedra</span></td>
+                                    <td>Fogo, Gelo, Voador, Inseto</td>
+                                    <td>Lutador, Terra, Aço</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-ghost">Fantasma</span></td>
+                                    <td>Psíquico, Fantasma</td>
+                                    <td>Sombrio</td>
+                                    <td>Normal</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-steel">Aço</span></td>
+                                    <td>Gelo, Pedra, Fada</td>
+                                    <td>Fogo, Água, Elétrico, Aço</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="type-badge type-normal">Normal</span></td>
+                                    <td>-</td>
+                                    <td>Pedra, Aço</td>
+                                    <td>Fantasma</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Dicas de Batalha -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="display-4 fw-bold text-warning">Dicas de Batalha</h2>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="pokemon-card text-center">
+                    <div class="pokemon-card-header">
+                        <i class="fas fa-lightbulb fa-3x mb-3"></i>
+                        <h4>Super Efetivo</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Movimentos super efetivos causam 2x de dano. Use-os sempre que possível!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="pokemon-card text-center">
+                    <div class="pokemon-card-header">
+                        <i class="fas fa-shield-alt fa-3x mb-3"></i>
+                        <h4>Pouco Efetivo</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Movimentos pouco efetivos causam 0.5x de dano. Evite usá-los!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="pokemon-card text-center">
+                    <div class="pokemon-card-header">
+                        <i class="fas fa-ban fa-3x mb-3"></i>
+                        <h4>Não Afeta</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Alguns tipos são imunes a outros. O ataque não causa dano algum!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Buscar Pokémon por tipo
+function buscarPokemonPorTipo(tipo) {
+    // Redirecionar para a página inicial com filtro de tipo
+    window.location.href = `/?tipo=${tipo}`;
+}
+
+// Destacar linha da tabela ao passar o mouse
+document.addEventListener('DOMContentLoaded', function() {
+    const tableRows = document.querySelectorAll('tbody tr');
+    
+    tableRows.forEach(row => {
+        row.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = 'rgba(255, 203, 5, 0.1)';
+        });
+        
+        row.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = '';
+        });
+    });
+});
+</script>
+{% endblock %}

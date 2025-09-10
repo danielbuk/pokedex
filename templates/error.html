@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Erro - Pokedex{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <div class="pokemon-card">
+                    <div class="pokemon-card-header">
+                        <i class="fas fa-exclamation-triangle fa-4x mb-4"></i>
+                        <h1 class="display-4">Oops!</h1>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="mb-4">{{ mensagem or "Algo deu errado!" }}</h2>
+                        <p class="lead mb-4">
+                            Não se preocupe, até os melhores treinadores se perdem às vezes!
+                        </p>
+                        
+                        <div class="d-flex justify-content-center gap-3 flex-wrap">
+                            <a href="{{ url_for('index') }}" class="btn btn-pokemon btn-lg">
+                                <i class="fas fa-home"></i> Voltar ao Início
+                            </a>
+                            <button class="btn btn-outline-warning btn-lg" onclick="history.back()">
+                                <i class="fas fa-arrow-left"></i> Voltar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pokémon aleatório para animar a página -->
+<section class="py-5 bg-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h3 class="text-warning mb-4">Enquanto isso, que tal conhecer um Pokémon aleatório?</h3>
+                <div id="random-pokemon" class="pokemon-card d-inline-block">
+                    <div class="pokemon-card-header">
+                        <div class="loading"></div>
+                        <p class="mt-3">Carregando Pokémon aleatório...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Carregar Pokémon aleatório
+async function loadRandomPokemon() {
+    try {
+        const randomId = Math.floor(Math.random() * 151) + 1; // Primeira geração
+        const response = await fetch(`/api/pokemon/${randomId}`);
+        
+        if (response.ok) {
+            const pokemon = await response.json();
+            const container = document.getElementById('random-pokemon');
+            
+            const types = pokemon.tipos.map(type => 
+                `<span class="type-badge type-${type}">${type}</span>`
+            ).join('');
+            
+            container.innerHTML = `
+                <div class="pokemon-card-header">
+                    <span class="pokemon-id">#${pokemon.id.toString().padStart(3, '0')}</span>
+                    <h3>${pokemon.nome}</h3>
+                </div>
+                <div class="card-body text-center">
+                    <img src="${pokemon.sprites.front_default || '/static/images/pokemon-placeholder.png'}" 
+                         alt="${pokemon.nome}" class="pokemon-sprite">
+                    <div class="pokemon-types">
+                        ${types}
+                    </div>
+                    <a href="/pokemon/${pokemon.id}" class="btn btn-pokemon btn-sm">
+                        <i class="fas fa-info-circle"></i> Ver Detalhes
+                    </a>
+                </div>
+            `;
+        }
+    } catch (error) {
+        console.error('Erro ao carregar Pokémon aleatório:', error);
+        document.getElementById('random-pokemon').innerHTML = 
+            '<div class="pokemon-card-header"><p class="text-danger">Erro ao carregar Pokémon</p></div>';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadRandomPokemon();
+});
+</script>
+{% endblock %}

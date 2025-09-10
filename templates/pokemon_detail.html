@@ -1,0 +1,316 @@
+{% extends "base.html" %}
+
+{% block title %}{{ pokemon.nome }} - Pokedex{% endblock %}
+
+{% block content %}
+<!-- Header do Pokémon -->
+<section class="pokemon-detail-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="pokemon-detail-title">{{ pokemon.nome }}</h1>
+                <p class="lead">Pokémon #{{ pokemon.id }}</p>
+                
+                <img src="{{ pokemon.sprites.front_default or '/static/images/pokemon-placeholder.png' }}" 
+                     alt="{{ pokemon.nome }}" class="pokemon-detail-sprite">
+                
+                <div class="pokemon-types">
+                    {% for tipo in pokemon.tipos %}
+                    <span class="type-badge type-{{ tipo }}">{{ tipo.title() }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Informações Básicas -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="info-section">
+                    <h3><i class="fas fa-info-circle"></i> Informações Básicas</h3>
+                    
+                    <div class="row">
+                        <div class="col-6">
+                            <p><strong>ID:</strong> #{{ pokemon.id }}</p>
+                            <p><strong>Nome:</strong> {{ pokemon.nome }}</p>
+                            <p><strong>Altura:</strong> {{ pokemon.altura }}m</p>
+                        </div>
+                        <div class="col-6">
+                            <p><strong>Peso:</strong> {{ pokemon.peso }}kg</p>
+                            <p><strong>Experiência Base:</strong> {{ pokemon.base_experience }}</p>
+                            <p><strong>Tipos:</strong> {{ pokemon.tipos|join(', ')|title }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="info-section">
+                    <h3><i class="fas fa-images"></i> Sprites</h3>
+                    
+                    <div class="row">
+                        <div class="col-6 text-center mb-3">
+                            <h5>Normal</h5>
+                            <img src="{{ pokemon.sprites.front_default or '/static/images/pokemon-placeholder.png' }}" 
+                                 alt="{{ pokemon.nome }} Front" class="img-fluid" style="max-width: 100px;">
+                            <p class="small">Frontal</p>
+                        </div>
+                        <div class="col-6 text-center mb-3">
+                            <h5>Shiny</h5>
+                            <img src="{{ pokemon.sprites.front_shiny or '/static/images/pokemon-placeholder.png' }}" 
+                                 alt="{{ pokemon.nome }} Shiny" class="img-fluid" style="max-width: 100px;">
+                            <p class="small">Shiny</p>
+                        </div>
+                    </div>
+                    
+                    {% if pokemon.sprites.official_artwork %}
+                    <div class="text-center">
+                        <h5>Arte Oficial</h5>
+                        <img src="{{ pokemon.sprites.official_artwork }}" 
+                             alt="{{ pokemon.nome }} Official" class="img-fluid" style="max-width: 200px;">
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Estatísticas -->
+<section class="py-5 bg-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="info-section">
+                    <h3><i class="fas fa-chart-bar"></i> Estatísticas Base</h3>
+                    
+                    <div class="stats-container">
+                        <div class="stat-bar">
+                            <span class="stat-label">HP</span>
+                            <div class="stat-value">
+                                <div class="stat-progress">
+                                    <div class="stat-fill" style="width: {{ (pokemon.stats.hp / 255) * 100 }}%"></div>
+                                </div>
+                                <span class="ms-2">{{ pokemon.stats.hp }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-bar">
+                            <span class="stat-label">Ataque</span>
+                            <div class="stat-value">
+                                <div class="stat-progress">
+                                    <div class="stat-fill" style="width: {{ (pokemon.stats.attack / 255) * 100 }}%"></div>
+                                </div>
+                                <span class="ms-2">{{ pokemon.stats.attack }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-bar">
+                            <span class="stat-label">Defesa</span>
+                            <div class="stat-value">
+                                <div class="stat-progress">
+                                    <div class="stat-fill" style="width: {{ (pokemon.stats.defense / 255) * 100 }}%"></div>
+                                </div>
+                                <span class="ms-2">{{ pokemon.stats.defense }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-bar">
+                            <span class="stat-label">Ataque Especial</span>
+                            <div class="stat-value">
+                                <div class="stat-progress">
+                                    <div class="stat-fill" style="width: {{ (pokemon.stats.special_attack / 255) * 100 }}%"></div>
+                                </div>
+                                <span class="ms-2">{{ pokemon.stats.special_attack }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-bar">
+                            <span class="stat-label">Defesa Especial</span>
+                            <div class="stat-value">
+                                <div class="stat-progress">
+                                    <div class="stat-fill" style="width: {{ (pokemon.stats.special_defense / 255) * 100 }}%"></div>
+                                </div>
+                                <span class="ms-2">{{ pokemon.stats.special_defense }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-bar">
+                            <span class="stat-label">Velocidade</span>
+                            <div class="stat-value">
+                                <div class="stat-progress">
+                                    <div class="stat-fill" style="width: {{ (pokemon.stats.speed / 255) * 100 }}%"></div>
+                                </div>
+                                <span class="ms-2">{{ pokemon.stats.speed }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Habilidades -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="info-section">
+                    <h3><i class="fas fa-magic"></i> Habilidades</h3>
+                    
+                    {% for habilidade in pokemon.habilidades %}
+                    <div class="ability-item {% if habilidade.oculta %}ability-hidden{% endif %}">
+                        <h5>{{ habilidade.nome.replace('-', ' ').title() }}</h5>
+                        {% if habilidade.oculta %}
+                        <span class="badge bg-primary">Habilidade Oculta</span>
+                        {% else %}
+                        <span class="badge bg-secondary">Habilidade Normal</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="info-section">
+                    <h3><i class="fas fa-fist-raised"></i> Movimentos</h3>
+                    
+                    <div class="moves-grid">
+                        {% for movimento in pokemon.movimentos %}
+                        <div class="move-item">
+                            <h6>{{ movimento.replace('-', ' ').title() }}</h6>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    {% if pokemon.movimentos|length >= 10 %}
+                    <p class="text-muted mt-3">
+                        <i class="fas fa-info-circle"></i> 
+                        Mostrando 10 de muitos movimentos disponíveis
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Navegação -->
+<section class="py-5 bg-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="{{ url_for('index') }}" class="btn btn-pokemon btn-lg me-3">
+                    <i class="fas fa-arrow-left"></i> Voltar à Pokedex
+                </a>
+                
+                {% if pokemon.id > 1 %}
+                <a href="/pokemon/{{ pokemon.id - 1 }}" class="btn btn-outline-warning btn-lg me-3">
+                    <i class="fas fa-chevron-left"></i> Pokémon Anterior
+                </a>
+                {% endif %}
+                
+                {% if pokemon.id < 1000 %}
+                <a href="/pokemon/{{ pokemon.id + 1 }}" class="btn btn-outline-warning btn-lg">
+                    <i class="fas fa-chevron-right"></i> Próximo Pokémon
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Compartilhar -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="info-section">
+                    <h3><i class="fas fa-share-alt"></i> Compartilhar</h3>
+                    <p>Compartilhe este Pokémon com seus amigos!</p>
+                    
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <button class="btn btn-outline-primary" onclick="shareOnTwitter()">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </button>
+                        <button class="btn btn-outline-success" onclick="shareOnWhatsApp()">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </button>
+                        <button class="btn btn-outline-info" onclick="copyLink()">
+                            <i class="fas fa-link"></i> Copiar Link
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Compartilhar no Twitter
+function shareOnTwitter() {
+    const text = `Confira o ${pokemon.nome} na nossa Pokedex! #Pokemon #Pokedex`;
+    const url = window.location.href;
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    window.open(twitterUrl, '_blank');
+}
+
+// Compartilhar no WhatsApp
+function shareOnWhatsApp() {
+    const text = `Confira o ${pokemon.nome} na nossa Pokedex!`;
+    const url = window.location.href;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+    window.open(whatsappUrl, '_blank');
+}
+
+// Copiar link
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href).then(function() {
+        // Mostrar notificação
+        const btn = event.target.closest('button');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+        btn.classList.remove('btn-outline-info');
+        btn.classList.add('btn-success');
+        
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.classList.remove('btn-success');
+            btn.classList.add('btn-outline-info');
+        }, 2000);
+    });
+}
+
+// Animar barras de estatísticas quando a página carregar
+document.addEventListener('DOMContentLoaded', function() {
+    const statBars = document.querySelectorAll('.stat-fill');
+    
+    setTimeout(() => {
+        statBars.forEach(bar => {
+            const width = bar.style.width;
+            bar.style.width = '0%';
+            bar.style.transition = 'width 1s ease-in-out';
+            
+            setTimeout(() => {
+                bar.style.width = width;
+            }, 100);
+        });
+    }, 500);
+});
+
+// Navegação por teclado
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft' && {{ pokemon.id }} > 1) {
+        window.location.href = '/pokemon/{{ pokemon.id - 1 }}';
+    } else if (e.key === 'ArrowRight' && {{ pokemon.id }} < 1000) {
+        window.location.href = '/pokemon/{{ pokemon.id + 1 }}';
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,371 @@
+{% extends "base.html" %}
+
+{% block title %}Pokedex - A sua Pokedex Digital{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="hero-title">POKÉDEX DIGITAL</h1>
+                <p class="hero-subtitle">Descubra todos os Pokémon com nossa Pokedex moderna e interativa!</p>
+                <a href="#pokemon-grid" class="btn btn-pokemon btn-lg">
+                    <i class="fas fa-search"></i> Explorar Pokémon
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Seção de Destaque -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="display-4 fw-bold text-warning">Pokémon em Destaque</h2>
+                <p class="lead">Conheça alguns dos Pokémon mais populares!</p>
+            </div>
+        </div>
+        
+        <div class="row" id="featured-pokemon">
+            <!-- Pokémon em destaque serão carregados via JavaScript -->
+            <div class="col-12 text-center">
+                <div class="loading"></div>
+                <p class="mt-3">Carregando Pokémon...</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Seção de Estatísticas -->
+<section class="py-5 bg-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="display-4 fw-bold text-warning">Estatísticas da Pokedex</h2>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="pokemon-card text-center">
+                    <div class="pokemon-card-header">
+                        <i class="fas fa-dragon fa-3x mb-3"></i>
+                        <h3>1000+</h3>
+                        <p>Pokémon Disponíveis</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="pokemon-card text-center">
+                    <div class="pokemon-card-header">
+                        <i class="fas fa-tags fa-3x mb-3"></i>
+                        <h3>18</h3>
+                        <p>Tipos Diferentes</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="pokemon-card text-center">
+                    <div class="pokemon-card-header">
+                        <i class="fas fa-star fa-3x mb-3"></i>
+                        <h3>100%</h3>
+                        <p>Dados Oficiais</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="pokemon-card text-center">
+                    <div class="pokemon-card-header">
+                        <i class="fas fa-mobile-alt fa-3x mb-3"></i>
+                        <h3>Responsivo</h3>
+                        <p>Funciona em qualquer dispositivo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Grid de Pokémon -->
+<section class="py-5" id="pokemon-grid">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="display-4 fw-bold text-warning">Todos os Pokémon</h2>
+                <p class="lead">Explore nossa coleção completa de Pokémon!</p>
+            </div>
+        </div>
+        
+        <!-- Filtros -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text bg-warning text-dark">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text" class="form-control" id="pokemon-filter" 
+                           placeholder="Filtrar Pokémon...">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <select class="form-select" id="type-filter">
+                    <option value="">Todos os Tipos</option>
+                    <option value="fire">Fogo</option>
+                    <option value="water">Água</option>
+                    <option value="grass">Planta</option>
+                    <option value="electric">Elétrico</option>
+                    <option value="psychic">Psíquico</option>
+                    <option value="ice">Gelo</option>
+                    <option value="dragon">Dragão</option>
+                    <option value="dark">Sombrio</option>
+                    <option value="fairy">Fada</option>
+                    <option value="fighting">Lutador</option>
+                    <option value="poison">Venenoso</option>
+                    <option value="ground">Terra</option>
+                    <option value="flying">Voador</option>
+                    <option value="bug">Inseto</option>
+                    <option value="rock">Pedra</option>
+                    <option value="ghost">Fantasma</option>
+                    <option value="steel">Aço</option>
+                    <option value="normal">Normal</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Grid de Pokémon -->
+        <div class="pokemon-grid" id="pokemon-container">
+            <!-- Pokémon serão carregados via JavaScript -->
+            <div class="col-12 text-center">
+                <div class="loading"></div>
+                <p class="mt-3">Carregando todos os Pokémon...</p>
+            </div>
+        </div>
+        
+        <!-- Botão Carregar Mais -->
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <button class="btn btn-pokemon" id="load-more-btn" style="display: none;">
+                    <i class="fas fa-plus"></i> Carregar Mais Pokémon
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Seção de Recursos -->
+<section class="py-5 bg-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="display-4 fw-bold text-warning">Recursos da Pokedex</h2>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="pokemon-card text-center">
+                    <div class="pokemon-card-header">
+                        <i class="fas fa-search fa-3x mb-3"></i>
+                        <h4>Busca Inteligente</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Encontre qualquer Pokémon por nome, ID ou tipo. Nossa busca é rápida e precisa!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="pokemon-card text-center">
+                    <div class="pokemon-card-header">
+                        <i class="fas fa-chart-bar fa-3x mb-3"></i>
+                        <h4>Estatísticas Detalhadas</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Veja todas as estatísticas, habilidades e movimentos de cada Pokémon em detalhes.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="pokemon-card text-center">
+                    <div class="pokemon-card-header">
+                        <i class="fas fa-mobile-alt fa-3x mb-3"></i>
+                        <h4>Design Responsivo</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Funciona perfeitamente em computadores, tablets e smartphones.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Variáveis globais
+let allPokemon = [];
+let filteredPokemon = [];
+let currentOffset = 0;
+const limit = 20;
+
+// Carregar Pokémon em destaque
+async function loadFeaturedPokemon() {
+    const featuredIds = [25, 6, 9, 3, 150, 151]; // Pikachu, Charizard, Blastoise, Venusaur, Mewtwo, Mew
+    
+    try {
+        const container = document.getElementById('featured-pokemon');
+        container.innerHTML = '';
+        
+        for (const id of featuredIds) {
+            const response = await fetch(`/api/pokemon/${id}`);
+            if (response.ok) {
+                const pokemon = await response.json();
+                container.innerHTML += createPokemonCard(pokemon, true);
+            }
+        }
+    } catch (error) {
+        console.error('Erro ao carregar Pokémon em destaque:', error);
+        document.getElementById('featured-pokemon').innerHTML = 
+            '<div class="col-12 text-center"><p class="text-danger">Erro ao carregar Pokémon em destaque</p></div>';
+    }
+}
+
+// Carregar lista de Pokémon
+async function loadPokemonList(offset = 0, append = false) {
+    try {
+        const response = await fetch(`/api/lista?limit=${limit}&offset=${offset}`);
+        if (response.ok) {
+            const data = await response.json();
+            
+            if (!append) {
+                allPokemon = [];
+                filteredPokemon = [];
+            }
+            
+            // Carregar detalhes de cada Pokémon
+            for (const pokemon of data.results) {
+                const detailResponse = await fetch(`/api/pokemon/${pokemon.id}`);
+                if (detailResponse.ok) {
+                    const pokemonDetail = await detailResponse.json();
+                    allPokemon.push(pokemonDetail);
+                }
+            }
+            
+            filteredPokemon = [...allPokemon];
+            displayPokemon();
+            
+            // Mostrar botão "Carregar Mais" se houver mais Pokémon
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            if (allPokemon.length < data.count) {
+                loadMoreBtn.style.display = 'block';
+                currentOffset = offset + limit;
+            } else {
+                loadMoreBtn.style.display = 'none';
+            }
+        }
+    } catch (error) {
+        console.error('Erro ao carregar lista de Pokémon:', error);
+        document.getElementById('pokemon-container').innerHTML = 
+            '<div class="col-12 text-center"><p class="text-danger">Erro ao carregar Pokémon</p></div>';
+    }
+}
+
+// Criar card do Pokémon
+function createPokemonCard(pokemon, isFeatured = false) {
+    const types = pokemon.tipos.map(type => 
+        `<span class="type-badge type-${type}">${type}</span>`
+    ).join('');
+    
+    const cardClass = isFeatured ? 'col-md-4 col-sm-6 mb-4' : 'col-lg-3 col-md-4 col-sm-6 mb-4';
+    
+    return `
+        <div class="${cardClass} pokemon-item" data-name="${pokemon.nome.toLowerCase()}" data-types="${pokemon.tipos.join(',')}">
+            <div class="pokemon-card">
+                <div class="pokemon-card-header">
+                    <span class="pokemon-id">#${pokemon.id.toString().padStart(3, '0')}</span>
+                    <h3>${pokemon.nome}</h3>
+                </div>
+                <div class="card-body text-center">
+                    <img src="${pokemon.sprites.front_default || '/static/images/pokemon-placeholder.png'}" 
+                         alt="${pokemon.nome}" class="pokemon-sprite">
+                    <div class="pokemon-types">
+                        ${types}
+                    </div>
+                    <a href="/pokemon/${pokemon.id}" class="btn btn-pokemon btn-sm">
+                        <i class="fas fa-info-circle"></i> Ver Detalhes
+                    </a>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Exibir Pokémon
+function displayPokemon() {
+    const container = document.getElementById('pokemon-container');
+    container.innerHTML = '';
+    
+    if (filteredPokemon.length === 0) {
+        container.innerHTML = '<div class="col-12 text-center"><p class="text-muted">Nenhum Pokémon encontrado</p></div>';
+        return;
+    }
+    
+    filteredPokemon.forEach(pokemon => {
+        container.innerHTML += createPokemonCard(pokemon);
+    });
+}
+
+// Filtrar Pokémon
+function filterPokemon() {
+    const nameFilter = document.getElementById('pokemon-filter').value.toLowerCase();
+    const typeFilter = document.getElementById('type-filter').value;
+    
+    filteredPokemon = allPokemon.filter(pokemon => {
+        const matchesName = pokemon.nome.toLowerCase().includes(nameFilter);
+        const matchesType = !typeFilter || pokemon.tipos.includes(typeFilter);
+        return matchesName && matchesType;
+    });
+    
+    displayPokemon();
+}
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', function() {
+    // Carregar Pokémon em destaque
+    loadFeaturedPokemon();
+    
+    // Carregar lista inicial
+    loadPokemonList();
+    
+    // Filtros
+    document.getElementById('pokemon-filter').addEventListener('input', filterPokemon);
+    document.getElementById('type-filter').addEventListener('change', filterPokemon);
+    
+    // Botão carregar mais
+    document.getElementById('load-more-btn').addEventListener('click', function() {
+        loadPokemonList(currentOffset, true);
+    });
+    
+    // Smooth scroll para âncoras
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex - Teste</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #FFCB05 0%, #3B82F6 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #FFCB05;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .pokemon-card {
+            background: #f8f9fa;
+            border: 3px solid #FFCB05;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .btn {
+            background: linear-gradient(135deg, #FFCB05 0%, #3B82F6 100%);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 POKEDEX FLASK</h1>
+        
+        <div class="pokemon-card">
+            <h2>✅ Pokedex Funcionando!</h2>
+            <p>A sua Pokedex digital está rodando perfeitamente!</p>
+        </div>
+        
+        <div class="pokemon-card">
+            <h3>🔍 Testar API</h3>
+            <p>Clique nos botões abaixo para testar:</p>
+            <a href="/api/pokemon/25" class="btn">Ver Pikachu (API)</a>
+            <a href="/api/pokemon/6" class="btn">Ver Charizard (API)</a>
+            <a href="/api/lista" class="btn">Lista de Pokémon</a>
+        </div>
+        
+        <div class="pokemon-card">
+            <h3>🎯 Buscar Pokémon</h3>
+            <form action="/buscar" method="GET">
+                <input type="text" name="q" placeholder="Digite o nome ou ID do Pokémon" 
+                       style="padding: 10px; border: 2px solid #FFCB05; border-radius: 10px; width: 300px;">
+                <button type="submit" class="btn">Buscar</button>
+            </form>
+        </div>
+        
+        <div class="pokemon-card">
+            <h3>📱 Links Úteis</h3>
+            <a href="/pokemon/25" class="btn">Pikachu</a>
+            <a href="/pokemon/6" class="btn">Charizard</a>
+            <a href="/pokemon/1" class="btn">Bulbasaur</a>
+            <a href="/pokemon/150" class="btn">Mewtwo</a>
+        </div>
+    </div>
+</body>
+</html>
