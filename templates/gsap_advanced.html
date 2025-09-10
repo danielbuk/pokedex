@@ -8,220 +8,10 @@
     <!-- GSAP CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
     
     <!-- CSS Avançado -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_advanced.css') }}">
-    
-    <style>
-        /* Estilos específicos para GSAP */
-        .gsap-container {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero-section {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(255, 203, 5, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.2) 0%, transparent 50%),
-                linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-            position: relative;
-        }
-        
-        .hero-content {
-            text-align: center;
-            z-index: 10;
-        }
-        
-        .hero-title {
-            font-size: 4rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #FFCB05 0%, #3B82F6 50%, #EF4444 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
-            text-shadow: 0 0 30px rgba(255, 203, 5, 0.5);
-        }
-        
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: #CBD5E1;
-            margin-bottom: 40px;
-            opacity: 0.9;
-        }
-        
-        .cta-button {
-            background: linear-gradient(135deg, #FFCB05 0%, #3B82F6 100%);
-            border: none;
-            color: #0F172A;
-            padding: 20px 40px;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255, 203, 5, 0.3);
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(255, 203, 5, 0.5);
-        }
-        
-        /* Partículas de fundo */
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #FFCB05;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-        
-        /* Cards com animações GSAP */
-        .pokemon-card-gsap {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 203, 5, 0.2);
-            border-radius: 25px;
-            padding: 30px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-        
-        .pokemon-card-gsap::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #FFCB05 0%, #3B82F6 50%, #EF4444 100%);
-            border-radius: 25px 25px 0 0;
-        }
-        
-        /* Seção de conteúdo */
-        .content-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-        }
-        
-        /* Grid de Pokémon */
-        .pokemon-grid-gsap {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            margin: 50px 0;
-        }
-        
-        /* Stats com animação */
-        .stats-gsap {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin: 50px 0;
-        }
-        
-        .stat-card-gsap {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            color: #F8FAFC;
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #FFCB05 0%, #3B82F6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-        }
-        
-        /* Botões com animação */
-        .btn-gsap {
-            background: rgba(255, 203, 5, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 203, 5, 0.3);
-            color: #FFCB05;
-            padding: 15px 30px;
-            border-radius: 25px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin: 10px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* Loading spinner GSAP */
-        .gsap-loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0F172A;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-        
-        .loader-content {
-            text-align: center;
-        }
-        
-        .loader-spinner {
-            width: 80px;
-            height: 80px;
-            border: 4px solid rgba(255, 203, 5, 0.3);
-            border-top: 4px solid #FFCB05;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-        }
-        
-        .loader-text {
-            color: #FFCB05;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        
-        /* Responsividade */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .pokemon-grid-gsap {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats-gsap {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            }
-        }
-    </style>
 </head>
 <body>
     <!-- Loading Screen -->
@@ -314,188 +104,106 @@
         <p>Pokémon é uma marca registrada da Nintendo</p>
     </div>
 
-    <!-- GSAP JavaScript - VERSÃO SIMPLES E FUNCIONAL -->
+    <!-- GSAP JavaScript OTIMIZADO -->
     <script>
-        // Registrar plugins
-        gsap.registerPlugin(ScrollTrigger, TextPlugin, MotionPathPlugin);
+        // Registrar os plugins do GSAP
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-        // Configurações iniciais
-        gsap.set(".pokemon-card-gsap", { opacity: 0, y: 100 });
-        gsap.set(".stat-card-gsap", { opacity: 0, scale: 0.8 });
-        gsap.set("#heroTitle", { opacity: 0, y: -50 });
-        gsap.set("#heroSubtitle", { opacity: 0, y: 50 });
-        gsap.set("#ctaButton", { opacity: 0, scale: 0.8 });
-        gsap.set(".particle", { opacity: 0, scale: 0 });
-
-        // Timeline principal
-        const mainTimeline = gsap.timeline();
-
-        // Animação de loading
-        mainTimeline
-            .to(".loader-spinner", { rotation: 360, duration: 1, repeat: -1, ease: "none" })
-            .to("#loader", { opacity: 0, duration: 0.5, delay: 2 })
-            .set("#loader", { display: "none" })
-            
-            // Hero animations
-            .to("#heroTitle", { opacity: 1, y: 0, duration: 1, ease: "power2.out" })
-            .to("#heroSubtitle", { opacity: 1, y: 0, duration: 1, ease: "power2.out" }, "-=0.5")
-            .to("#ctaButton", { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.7)" }, "-=0.3")
-            
-            // Particles animation
-            .to(".particle", { 
-                opacity: 1, 
-                scale: 1, 
+        // --- ANIMAÇÃO DE LOADING ---
+        const loaderTimeline = gsap.timeline();
+        loaderTimeline
+            .to(".loader-spinner", { 
+                rotation: 360, 
                 duration: 1, 
-                stagger: 0.2,
-                ease: "power2.out"
-            }, "-=0.5");
+                repeat: -1, 
+                ease: "none" 
+            })
+            .to("#loader", { 
+                opacity: 0, 
+                duration: 0.5, 
+                delay: 1.5, // Simula um tempo de carregamento
+                onComplete: () => document.getElementById("loader").style.display = 'none'
+            });
 
-        // ScrollTrigger para stats
-        gsap.to(".stat-number", {
-            textContent: function() {
-                return this.getAttribute("data-target");
-            },
-            duration: 2,
-            ease: "power2.out",
-            snap: { textContent: 1 },
-            scrollTrigger: {
-                trigger: "#stats",
-                start: "top 80%",
-                end: "bottom 20%",
-                toggleActions: "play none none reverse"
-            }
-        });
+        // --- ANIMAÇÃO DA SEÇÃO HERO ---
+        // Inicia somente após o loader terminar
+        const heroTimeline = gsap.timeline({ paused: true });
+        heroTimeline
+            .from("#heroTitle", { opacity: 0, y: -50, duration: 1, ease: "power2.out" })
+            .from("#heroSubtitle", { opacity: 0, y: 50, duration: 1, ease: "power2.out" }, "-=0.7")
+            .from("#ctaButton", { opacity: 0, scale: 0.8, duration: 0.8, ease: "back.out(1.7)" }, "-=0.5");
 
-        // Animações dos cards com ScrollTrigger
-        gsap.to(".pokemon-card-gsap", {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            stagger: 0.2,
-            ease: "power2.out",
+        // Inicia a timeline do Hero quando o loader acaba
+        loaderTimeline.then(() => heroTimeline.play());
+
+        // --- ANIMAÇÕES DE SCROLLTRIGGER ---
+        // Cards aparecem com a rolagem
+        gsap.from(".pokemon-card-gsap", {
             scrollTrigger: {
                 trigger: "#pokemonGrid",
-                start: "top 80%",
-                end: "bottom 20%",
+                start: "top 85%",
                 toggleActions: "play none none reverse"
-            }
+            },
+            opacity: 0,
+            y: 100,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power2.out",
         });
 
-        // Animações dos stats
-        gsap.to(".stat-card-gsap", {
-            opacity: 1,
-            scale: 1,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: "back.out(1.7)",
+        // Stats aparecem com a rolagem
+        gsap.from(".stat-card-gsap", {
             scrollTrigger: {
                 trigger: "#stats",
-                start: "top 80%",
-                end: "bottom 20%",
+                start: "top 85%",
                 toggleActions: "play none none reverse"
-            }
+            },
+            opacity: 0,
+            scale: 0.8,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "back.out(1.7)",
         });
 
-        // Hover effects para cards
-        document.querySelectorAll(".pokemon-card-gsap").forEach(card => {
-            card.addEventListener("mouseenter", () => {
-                gsap.to(card, { 
-                    scale: 1.05, 
-                    rotationY: 5, 
-                    rotationX: 5,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-            });
-            
-            card.addEventListener("mouseleave", () => {
-                gsap.to(card, { 
-                    scale: 1, 
-                    rotationY: 0, 
-                    rotationX: 0,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-            });
-        });
-
-        // Hover effects para botões
-        document.querySelectorAll(".btn-gsap").forEach(btn => {
-            btn.addEventListener("mouseenter", () => {
-                gsap.to(btn, { 
-                    scale: 1.1, 
-                    duration: 0.2,
-                    ease: "power2.out"
-                });
-            });
-            
-            btn.addEventListener("mouseleave", () => {
-                gsap.to(btn, { 
-                    scale: 1, 
-                    duration: 0.2,
-                    ease: "power2.out"
-                });
-            });
-        });
-
-        // CTA Button click animation - VERSÃO FUNCIONAL
-        document.getElementById("ctaButton").addEventListener("click", (e) => {
-            e.preventDefault();
-            console.log('🎮 Botão "Explorar Pokémon" clicado!');
-            
-            // Efeito visual no botão
-            gsap.to("#ctaButton", { 
-                scale: 0.95, 
-                duration: 0.1,
-                yoyo: true,
-                repeat: 1,
-                ease: "power2.inOut"
-            });
-            
-            // Scroll funcional
-            setTimeout(() => {
-                const contentSection = document.querySelector('.content-section');
-                if (contentSection) {
-                    console.log('✅ Fazendo scroll para content-section');
-                    contentSection.scrollIntoView({ 
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                } else {
-                    console.log('⚠️ Content-section não encontrado, scroll manual');
-                    window.scrollTo({
-                        top: window.innerHeight,
-                        behavior: 'smooth'
-                    });
+        // Animação do contador dos stats
+        gsap.utils.toArray(".stat-number").forEach(stat => {
+            gsap.from(stat, {
+                textContent: 0,
+                duration: 2,
+                ease: "power2.out",
+                snap: { textContent: 1 },
+                scrollTrigger: {
+                    trigger: stat,
+                    start: "top 90%",
+                    toggleActions: "play none none reverse",
                 }
-            }, 200);
+            });
         });
 
-        // Parallax effect para partículas
-        gsap.to(".particle", {
-            y: -100,
-            duration: 3,
-            repeat: -1,
-            yoyo: true,
-            ease: "power1.inOut",
-            stagger: 0.5
+        // --- INTERAÇÕES DO USUÁRIO ---
+        // Efeito de hover nos cards
+        document.querySelectorAll(".pokemon-card-gsap, .stat-card-gsap").forEach(card => {
+            card.addEventListener("mouseenter", () => {
+                gsap.to(card, { y: -10, duration: 0.3, ease: "power2.out" });
+            });
+            card.addEventListener("mouseleave", () => {
+                gsap.to(card, { y: 0, duration: 0.3, ease: "power2.out" });
+            });
         });
 
-        // Text animation para hero title
-        gsap.to("#heroTitle", {
-            textShadow: "0 0 30px rgba(255, 203, 5, 0.8)",
-            duration: 2,
-            repeat: -1,
-            yoyo: true,
-            ease: "power2.inOut"
+        // *** BOTÃO "EXPLORAR POKÉMON" CORRIGIDO ***
+        document.getElementById("ctaButton").addEventListener("click", () => {
+            gsap.to(window, {
+                duration: 1.5, // Duração da rolagem
+                scrollTo: {
+                    y: "#content", // Alvo do scroll
+                    offsetY: 50 // Um pequeno espaço do topo
+                },
+                ease: "power2.inOut" // Efeito de aceleração
+            });
         });
 
-        // Resize handler
-        window.addEventListener('resize', () => {
-            ScrollTrigger.refresh();
-        });
-
-        console.log("🚀 GSAP Pokedex carregada com sucesso!");
+        console.log("🚀 Pokedex GSAP carregada com sucesso!");
     </script>
 </body>
 </html>

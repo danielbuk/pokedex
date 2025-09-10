@@ -221,9 +221,25 @@ class PokedexGSAP {
         // CTA Button special effect
         const ctaButton = document.getElementById("ctaButton");
         if (ctaButton) {
-            ctaButton.addEventListener("click", () => {
+            ctaButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                
+                // Efeito visual no botão
+                gsap.to(ctaButton, { 
+                    scale: 0.95, 
+                    duration: 0.1,
+                    yoyo: true,
+                    repeat: 1,
+                    ease: "power2.inOut"
+                });
+                
+                // Criar explosão
                 this.createExplosionEffect(ctaButton);
-                this.scrollToContent();
+                
+                // Scroll com delay para ver a explosão
+                setTimeout(() => {
+                    this.scrollToContent();
+                }, 300);
             });
         }
     }
@@ -389,11 +405,35 @@ class PokedexGSAP {
     }
 
     scrollToContent() {
-        gsap.to(window, {
-            duration: 1.5,
-            scrollTo: "#content",
-            ease: "power2.inOut"
-        });
+        console.log('🎮 ScrollToContent chamado!');
+        
+        // Scroll para a seção de conteúdo
+        const contentSection = document.querySelector('.content-section');
+        if (contentSection) {
+            console.log('✅ Encontrou content-section, fazendo scroll...');
+            contentSection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        } else {
+            console.log('⚠️ Content-section não encontrado, tentando fallback...');
+            // Fallback: scroll para o primeiro card
+            const firstCard = document.querySelector('.pokemon-card-gsap');
+            if (firstCard) {
+                console.log('✅ Encontrou primeiro card, fazendo scroll...');
+                firstCard.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            } else {
+                console.log('❌ Nenhum elemento encontrado para scroll');
+                // Último fallback: scroll manual
+                window.scrollTo({
+                    top: window.innerHeight,
+                    behavior: 'smooth'
+                });
+            }
+        }
     }
 
     // Método para criar efeitos especiais por tipo de Pokémon
